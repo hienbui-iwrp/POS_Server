@@ -23,6 +23,9 @@ builder.Services.AddSingleton<IMongoClient>(s=> new MongoClient(builder.Configur
 // add repository
 builder.Services.AddScoped<IFoodsRepository, FoodsRepository>();
 
+// enable log
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 

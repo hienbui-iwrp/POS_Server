@@ -1,13 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using POS_server.Models;
 using POS_server.Repositories;
 
 namespace POS_server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class FoodController : ControllerBase
     {
 
@@ -18,11 +16,31 @@ namespace POS_server.Controllers
             _repository = foodsRepository;
         }
 
-        [HttpGet("get")]
-        public List<Food> GetFood()
+        [HttpGet]
+        public IActionResult Get()
         {
-            return _repository.GetFoods();
+            return Ok(_repository.GetFoods());
         }
-        
+
+
+        [HttpGet("restaurant/{restaurantId}")]
+        public IActionResult GetByCategory(string restaurantId, string? categoryId = "")
+        {
+            return Ok(_repository.GetFoodsByCategory(restaurantId, categoryId));
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Food payload)
+        {
+            return Ok(_repository.AddFood(payload));
+        }
+
+        [HttpPost("{id}")]
+        public IActionResult Put(string id, [FromBody] Food payload)
+        {
+            _repository.AddFood(payload);
+            return Ok();
+        }
     }
 }
+

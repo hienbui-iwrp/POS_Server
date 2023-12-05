@@ -17,5 +17,9 @@ namespace POS_server.Models
         public string? Image { get; set; }
         [BsonElement("supply")]
         public int? Supply { get; set; }
+        [BsonElement("restaurant_id")]
+        public string? RestaurantId { get; set; }
+        [BsonElement("category")]
+        public string? Category { get; set; }
     }
 }
